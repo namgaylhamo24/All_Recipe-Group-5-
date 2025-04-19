@@ -12,6 +12,7 @@ function App() {
 		</div>
 	);
 	// this is my change
+	// new
 }
 
 export default App;
