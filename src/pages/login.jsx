@@ -8,7 +8,6 @@ const Login = () => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
-
   };
 
   return (
