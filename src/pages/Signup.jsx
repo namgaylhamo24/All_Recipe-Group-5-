@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+// I created a Signup component using React functional component
 const Signup = () => {
+// I used useState to manage the form fields: email, password, and confirmPassword
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+// I handled form submission to log the entered values for now
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Email:", email);
@@ -16,6 +19,7 @@ const Signup = () => {
   };
 
   return (
+// I shifted the form to the right using pl-64 and justify-start
     <div className="min-h-screen flex items-center justify-start pl-64">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
         <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">Sign Up</h2>

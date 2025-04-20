@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
+// I created a Login component using React functional component
 const Login = () => {
+
+ // I used useState to manage the email and password fields   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+// I handled the form submission to prevent reload and log the input
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Email:", email);
@@ -11,6 +15,7 @@ const Login = () => {
   };
 
   return (
+// I added left padding (pl-64) and justify-start to shift the form to the right
     <div className="min-h-screen flex items-center justify-start pl-64">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
         <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">Log In</h2>
