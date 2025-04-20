@@ -1,22 +1,22 @@
 // pages/HomePage.js
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { LogIn, Home } from "lucide-react"; // Icon for login and home
 import RecipeList from "../components/RecipeList";
 import SearchBar from "../components/SearchBar";
 import Modal from "../components/Modal";
 import FavoritesToggle from "../components/FavoritesToggle";
-import Button from "../components/Button";
 
 const HomePage = () => {
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // State to track selected recipe
-  const [favorites, setFavorites] = useState([]); // State to track liked recipes
-  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
-  const [showFavorites, setShowFavorites] = useState(false); // State to toggle between all recipes and favorites
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFavorites, setShowFavorites] = useState(false);
 
-  // Static data for recipes
   const recipes = [
-    { title: "Ema Datsi", description: "A national Bhutenese dish with a spicy chilli, cheese, onion and tomato.", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0HhKhZMi3rZLUGVIvKMgi-iYwLwGebrwkZQ&s" },
-    { title: "Kewa Datshi", description: "Kewa Datshi, literally meaning potatoes and cheese, is a traditional Bhutanese dish made with chiles.", imageUrl: "../kewadatsi.png"},
+    { title: "Ema Datsi", description: "A national Bhutanese dish...", imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0HhKhZMi3rZLUGVIvKMgi-iYwLwGebrwkZQ&s" },
+    { title: "Kewa Datshi", description: "Potatoes and cheese with chiles.", imageUrl: "../kewadatsi.png" },
     { title: "Shakam Datshi", description: "Shakam in Bhutanese dried beef, which is among the most famous of meats and its made with red chilli, onions, feta cheese.", imageUrl: "../shakam.png" },
     { title: "Sikam Phaksha Paa", description: "Sikam Phaksha Paa is a traditional Bhutanese dish made with pork and a variety of spices.", imageUrl: "../sikam.png" },
     { title: "Colcannon Potatoes", description: "A traditional Irish dish made with creamy mashed potatoes mixed with sautéed cabbage or kale and scallions.", imageUrl: "../colcanon.png" },
@@ -35,39 +35,53 @@ const HomePage = () => {
     { title: "Steak Frites", description: "A classic French dish with steak and fries.", imageUrl: "../streak.png" },
   ];
 
-  // Handles the search query change
   const handleSearchChange = (query) => setSearchQuery(query);
+  const handleViewRecipe = (title) => setSelectedRecipe(recipes.find(r => r.title === title));
+  const handleLike = (title) =>
+    setFavorites(favorites.includes(title) ? favorites.filter(fav => fav !== title) : [...favorites, title]);
+  const closeModal = () => setSelectedRecipe(null);
 
-  // Handles viewing recipe details
-  const handleViewRecipe = (title) => {
-    const recipe = recipes.find((recipe) => recipe.title === title);
-    setSelectedRecipe(recipe);
-  };
-
-  // Handles liking or unliking a recipe
-  const handleLike = (title) => {
-    if (favorites.includes(title)) {
-      setFavorites(favorites.filter((fav) => fav !== title)); // Remove from favorites
-    } else {
-      setFavorites([...favorites, title]); // Add to favorites
-    }
-  };
-
-  // Handles closing the modal
-  const closeModal = () => {
-    setSelectedRecipe(null);
-  };
-
-  // Filters recipes based on search query
   const filteredRecipes = recipes.filter((recipe) =>
     recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Filters recipes to show favorites or all
-  const recipesToDisplay = showFavorites ? recipes.filter((recipe) => favorites.includes(recipe.title)) : filteredRecipes;
+  const recipesToDisplay = showFavorites
+    ? recipes.filter((r) => favorites.includes(r.title))
+    : filteredRecipes;
 
   return (
     <div className="p-6">
+      {/* Header Section with Logo and Buttons */}
+      <div className="flex justify-between items-center mb-6">
+        {/* Logo */}
+        <div className="flex items-center space-x-3">
+          <img
+            src="/image.png"
+            alt="App Logo"
+            className="h-20 w-35"
+          />
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex space-x-4">
+          <Link
+            to="/"
+            className="flex items-center bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition text-sm"
+          >
+            <Home className="mr-2 w-4 h-4" />
+            Home
+          </Link>
+          <Link
+            to="/login"
+            className="flex items-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition text-sm"
+          >
+            <LogIn className="mr-2 w-4 h-4" />
+            Login
+          </Link>
+        </div>
+      </div>
+
+      {/* Search & Content */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearchChange} />
       <FavoritesToggle onToggle={() => setShowFavorites(!showFavorites)} showFavorites={showFavorites} />
       <RecipeList recipes={recipesToDisplay} onClick={handleViewRecipe} onLike={handleLike} favorites={favorites} />
