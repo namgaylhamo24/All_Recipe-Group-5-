@@ -1,17 +1,44 @@
-// components/SearchBar.js
+"use client"
 
-const SearchBar = ({ searchQuery, onSearchChange }) => {
+import React, { useState } from "react"
+import { Search } from "lucide-react"
+
+export function SearchBar({ onSearch = () => {}, placeholder = "Find a recipe or ingredient" }) {
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    onSearch(searchQuery)
+  }
+
   return (
-    <div className="mb-6">
-      <input
-        type="text"
-        placeholder="Search for a recipe..."
-        value={searchQuery}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full p-3 rounded-md shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-  );
-};
+    <header className="flex items-center p-4 bg-white shadow-md">
+      {/* Allrecipes logo */}
+      <div className="flex items-center">
+        <span className="text-xl font-bold text-black mr-0">Allrecipes</span>
+      </div>
+      
+      {/* Search Bar */}
+      <form onSubmit={handleSubmit} className="flex items-center w-full max-w-[500px]">
+        <div className="relative w-full">
+          <input
+            type="text"
+            placeholder={placeholder}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full border border-gray-300 px-4 py-2 rounded-md focus:border-gray-400 focus:outline-none shadow-sm pr-10"
+          />
+          <button
+            type="submit"
+            className="absolute inset-y-0 right-0 flex items-center justify-center bg-[#e33d26] text-white px-3 hover:bg-[#c93522] focus:outline-none rounded-r-md"
+            aria-label="Search"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+        </div>
+      </form>
+    </header>
+  )
+}
 
 export default SearchBar;
