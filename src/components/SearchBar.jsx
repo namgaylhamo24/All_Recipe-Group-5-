@@ -12,11 +12,11 @@ export function SearchBar({ onSearch = () => {}, placeholder = "Find a recipe or
   }
 
   return (
-    <header className="flex items-center p-4 bg-white shadow-md">
+    <header className="flex items-center p-4 bg-white">
       {/* Allrecipes logo */}
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <span className="text-xl font-bold text-black mr-0">Allrecipes</span>
-      </div>
+      </div> */}
       
       {/* Search Bar */}
       <form onSubmit={handleSubmit} className="flex items-center w-full max-w-[500px]">

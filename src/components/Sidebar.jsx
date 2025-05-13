@@ -1,48 +1,36 @@
-import { Home } from "lucide-react"; // Removed the Heart icon import
-import { Link } from "react-router-dom";
+"use client"
 
-const Sidebar = () => {
-  return (
-    <>
-      <DesktopSidebar />
-      <MobileSidebar />
-    </>
-  );
-};
-export default Sidebar;
+import React, { useState } from "react"
+import { Search } from "lucide-react"
 
-// DesktopSidebar component for larger screens
-const DesktopSidebar = () => {
+export function SearchBar({ onSearch = () => {}, placeholder = "Find a recipe or ingredient" }) {
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    onSearch(searchQuery)
+  }
+
   return (
-    <div className='p-3 md:p-10 border-r min-h-screen w-24 md:w-64 hidden sm:block'>
-      <div className='flex flex-col gap-20 sticky top-10 left-0'>
-        <div className='w-full'>
-          {/* Logo for desktop and mobile views */}
-          <img src='/image.png' alt='logo' className='hidden md:block' />
-          <img src='/mobile-logo.svg' alt='logo' className='block md:hidden' />
-        </div>
-        <ul className='flex flex-col items-center md:items-start gap-8'>
-          {/* Link to Home page */}
-          <Link to={'/'} className='flex gap-1'>
-            <Home size={'24'} />
-            <span className='font-bold hidden md:block'>Home</span>
-          </Link>
-        </ul>
+    <form onSubmit={handleSubmit} className="flex items-center w-full max-w-[500px]">
+      <div className="relative w-full">
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full border border-gray-300 px-4 py-2 rounded-md focus:border-gray-400 focus:outline-none shadow-sm pr-10"
+        />
+        <button
+          type="submit"
+          className="absolute inset-y-0 right-0 flex items-center justify-center bg-[#e33d26] text-white px-3 hover:bg-[#c93522] focus:outline-none rounded-r-md"
+          aria-label="Search"
+        >
+          <Search className="h-5 w-5" />
+        </button>
       </div>
-    </div>
-  );
-};
+    </form>
+  )
+}
 
-// MobileSidebar component for smaller screens
-const MobileSidebar = () => {
-  return (
-    <div
-      className='flex justify-center gap-10 border-b fixed w-full top-0 left-0 bg-white z-10 p-2 sm:hidden'
-    >
-      {/* Link to Home page */}
-      <Link to={'/'}>
-        <Home size={'24'} className='cursor-pointer' />
-      </Link>
-    </div>
-  );
-};
+export default SearchBar;

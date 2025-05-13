@@ -52,7 +52,7 @@ const HomePage = () => {
   return (
     <div className="p-6">
       {/* Header Section with Logo and Buttons */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 ">
         {/* Logo */}
         <div className="flex items-center space-x-3">
           <img
@@ -60,8 +60,11 @@ const HomePage = () => {
             alt="App Logo"
             className="h-20 w-35"
           />
+          <div className="w-96">
+            <SearchBar searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+          </div>
         </div>
-
+              
         {/* Navigation Buttons */}
         <div className="flex space-x-4">
           <Link
@@ -82,7 +85,7 @@ const HomePage = () => {
       </div>
 
       {/* Search & Content */}
-      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+      {/* <SearchBar searchQuery={searchQuery} onSearchChange={handleSearchChange} /> */}
       <FavoritesToggle onToggle={() => setShowFavorites(!showFavorites)} showFavorites={showFavorites} />
       <RecipeList recipes={recipesToDisplay} onClick={handleViewRecipe} onLike={handleLike} favorites={favorites} />
       <Modal recipe={selectedRecipe} onClose={closeModal} />
